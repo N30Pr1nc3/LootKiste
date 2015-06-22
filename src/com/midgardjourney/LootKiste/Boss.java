@@ -36,7 +36,7 @@ public class Boss{
 		    Player player = entry.getKey();
 		    Float damage = entry.getValue();
 		    
-		    Inventory inventory = new LootKistenInventar();
+		    LootKistenInventar inventory = new LootKistenInventar();
 		    
 		    kiste.addInventorry(player, inventory);
 		    

@@ -79,12 +79,15 @@ public class LootKiste extends JavaPlugin implements Listener{
 			return;
 		}
 		if(event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
-			Truhe.inventarErstellen((Player)event.getDamager(),(LivingEntity) event.getEntity(), event.getFinalDamage());
+			Boss.get((LivingEntity)event.getEntity()).kill();
 		}
 	}
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent b){
-		Truhe.truheZerstoeren(b.getBlock());
+		Kiste kiste = Kiste.get(b.getBlock());
+		if(kiste != null){
+			b.setCancelled(true);
+		}
 	}
 }

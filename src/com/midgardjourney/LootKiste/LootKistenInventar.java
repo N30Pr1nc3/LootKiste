@@ -12,6 +12,9 @@ public class LootKistenInventar {
 		this.player = player;
 	}
 	
+	public LootKistenInventar() {
+	}
+
 	public Inventory getInventory() {
 		return this.inventory;
 	}

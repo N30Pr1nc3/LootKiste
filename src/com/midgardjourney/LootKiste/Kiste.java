@@ -46,5 +46,12 @@ public class Kiste {
 		}
 	}
 
+	public static Kiste get(Block b) {
+		if(Kiste.kisten.containsKey(b)){
+			return Kiste.kisten.get(b);
+		}
+		return null;
+	}
+
 	
 }

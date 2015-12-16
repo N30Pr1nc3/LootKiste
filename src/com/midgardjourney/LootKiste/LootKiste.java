@@ -37,57 +37,17 @@ public class LootKiste extends JavaPlugin implements Listener{
 	
 	@EventHandler
 	public void onInteractEvent(PlayerInteractEvent event) {
-//		this.counter=this.counter+1;
-		System.out.println("event!!!");
-		Player		p = event.getPlayer();
-		Block 		b = event.getClickedBlock();		
-		if(b == null){
-			return;
-		}
-		if(b.getType().equals(Material.SKULL) && event.getAction() == Action.RIGHT_CLICK_BLOCK){
-			Kiste.inventarOeffnen(b,p);
-		}
     } 
 	
 	@EventHandler
 	public void onEnitiyDeathEvent(EntityDeathEvent  event) {
-		if(event.getEntity().getCustomName()==null){
-			return;
-		}
-		if(event.getEntity().getCustomName().length()<bossprefix.length()+1){
-			return;
-		}		
-		if (!event.getEntity().getCustomName().substring(0,bossprefix.length()).equals(bossprefix)){
-			return;
-		}
-		Boss boss = Boss.get(event.getEntity());
-		if(boss==null){
-			return;
-		}
-		boss.kill();
 	}
 		
 	@EventHandler
 	public void onEnitiyDamageEvent(EntityDamageByEntityEvent  event) {
-		if(event.getEntity().getCustomName()==null){
-			return;
-		}
-		if(event.getEntity().getCustomName().length()<bossprefix.length()+1){
-			return;
-		}		
-		if (!event.getEntity().getCustomName().substring(0,bossprefix.length()).equals(bossprefix)){
-			return;
-		}
-		if(event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
-			Boss.get((LivingEntity)event.getEntity()).kill();
-		}
 	}
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent b){
-		Kiste kiste = Kiste.get(b.getBlock());
-		if(kiste != null){
-			b.setCancelled(true);
-		}
 	}
 }

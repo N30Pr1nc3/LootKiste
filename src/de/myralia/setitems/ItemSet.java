@@ -23,7 +23,6 @@ public class ItemSet {
 		}
 		List<String> lore = meta.getLore();
 		String myMeta = lore.get(lore.size());
-		HiddenStr
 		
 		return true;
 	}

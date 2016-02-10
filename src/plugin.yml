@@ -1,0 +1,11 @@
+name: LootKiste
+version: 0.1
+author: NeoPrince
+website: http://midgard-journey.com
+main: com.midgardjourney.LootKiste.LootKiste
+commands:
+   item:
+      description: zeigt die akte eines users an
+      usage: /akte [user]
+      permission: akte.akte
+      permission-message: keine Berechtigung

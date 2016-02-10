@@ -1,69 +1,73 @@
 package de.myralia.setitems;
 
-import java.util.List;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.command.CommandSender;
+
 
 public class ItemSet {
-	public static Boolean isSetItem(ItemStack i){
-		if(i==null){
-			return false;
-		}
-		ItemMeta meta = i.getItemMeta();
-		if(meta == null){
-			return false; 
-		}
-		if(!meta.hasLore()){
-			return false;
-		}
-		List<String> lore = meta.getLore();
-		String myMeta = lore.get(lore.size());
-		
-		return true;
+
+	private static HashMap<Integer,ItemSet> sets;
+	
+	public static ItemSet getSetById(int id) {
+		if(!ItemSet.sets.containsKey(id)){
+			System.out.println("fehler ein set mit der id "+id+" gibt es nicht");
+			System.out.println("möglich sind:");
+			for(ItemSet set : ItemSet.sets.values()){
+				System.out.println(set.toString());
+			}
+			return null;
+		}	
+		return ItemSet.sets.get(id);
 	}
 	
-	public static ItemStack createItem(int itemid){
-		Material material = Material.IRON_SWORD;
-		Color color = Color.BLUE;
-		String name = "Tolles Set Item";
-		
-		
-		ItemStack i;
-		if( material == Material.LEATHER_BOOTS || material == Material.LEATHER_CHESTPLATE || material == Material.LEATHER_HELMET || material == Material.LEATHER_LEGGINGS){
-			i = ItemSet.createAsLeatherArmor(material,color);
-		}else{
-			i = ItemSet.createAsDefault(material);
+	public static void instanciate(){
+		ItemSet.sets = new HashMap<Integer,ItemSet>();
+		SetItem.initiate();
+	}
+
+	public static void list(CommandSender sender) {
+		sender.sendMessage(Color.gray +"Mögliche Sets / Items");
+		sender.sendMessage("test");
+		for (ItemSet set : ItemSet.sets.values()) {
+			sender.sendMessage(Color.blue + set.toString());
+			for (SetItem item: set.getItems()){
+				sender.sendMessage(Color.green+item.toString());
+			}
+		}	
+	}
+	
+	public static void deleteAll() {
+		ItemSet.sets.clear();
+	}
+
+	private int id;
+	private String bez;
+	
+	public ItemSet(int _id,String _bez){
+		this.bez=_bez;
+		this.id = _id;
+		ItemSet.sets.put(id, this);
+	}
+	
+	@Override
+	public String toString(){
+		String ret = String.valueOf(this.id);
+		ret = ret.concat(" ");
+		ret = ret.concat(this.bez);
+		return ret;
+	}
+	
+	private ArrayList<SetItem> getItems() {
+		ArrayList<SetItem> ret = new ArrayList<SetItem>();
+		for(SetItem item:SetItem.items.values()){
+			if(item.getSet().equals(this)){
+				ret.add(item);
+			}
 		}
-		ItemMeta meta =i.getItemMeta(); 
-		meta.setDisplayName(name);
-		List<String> lore = meta.getLore();
-		
-		
-		lore.add("Setitem");
-		lore.add(HiddenStringUtils.encodeString("{\"itemid\": "+String.valueOf(itemid)+",\"rep\":0}"));
-		
-		
-		meta.setLore(lore);
-		i.setItemMeta(meta);
-		
-		return i;		
+		return ret;
 	}
-	
-	private static ItemStack createAsLeatherArmor(Material material ,Color color){
-		ItemStack i = new ItemStack(material);
-		LeatherArmorMeta meta = (LeatherArmorMeta) i.getItemMeta();
-		meta.setColor(color);	
-		i.setItemMeta(meta);
-		return i;
-	}
-	
-	private static ItemStack createAsDefault(Material material){
-		return new ItemStack(material);
-		
-	}	
+
 }

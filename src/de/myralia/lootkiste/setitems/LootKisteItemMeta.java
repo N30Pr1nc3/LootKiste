@@ -4,9 +4,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class LootKisteItemMeta {
 	
-	public static LootKisteItemMeta parse(String s)
-	{		
-		String[] split =s.split("|");
+	public static LootKisteItemMeta decode(String s)
+	{			
+		String[] split =HiddenStringUtils.extractHiddenString(s).split("\\|");
+		
 		if(split.length !=2){
 			return null;
 		}
@@ -33,6 +34,11 @@ public class LootKisteItemMeta {
 	    .append("|")
 	    .append(this.repairs)
 	    .toString();
+	}
+		
+	public String encode()
+	{
+		return HiddenStringUtils.encodeString(this.toString());
 	}
 	
 	public SetItem getSetItem()

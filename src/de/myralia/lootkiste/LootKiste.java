@@ -57,7 +57,10 @@ public class LootKiste extends JavaPlugin implements Listener{
 	
 	private void calcUser(Player _player)
 	{
+		System.out.println("moep");
 		HashMap<ItemStack,LootKisteItemMeta> items = new HashMap<ItemStack,LootKisteItemMeta>();
+		
+		//_player.get
 
 		
 		

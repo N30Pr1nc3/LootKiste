@@ -10,8 +10,8 @@ import de.myralia.lootkiste.setitems.SetItem;
 
 public class BlutDuerster extends SetItem {	
 	public BlutDuerster() {
-		this.bez="Blut Dürster";
-		this.id = 1;
+		this.bez="Blut Duerster";
+		this.id = 1;		
 	}
 
 	@Override

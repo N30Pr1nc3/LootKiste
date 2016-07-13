@@ -8,9 +8,8 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import de.myralia.lootkiste.setitems.SetItem;
 
 public class FeuerHelm extends SetItem {
-
-	public void BlutDuerster() {		
-		this.bez="Feuer Helm ";
+	public FeuerHelm() {		
+		this.bez = "Feuer Helm";
 		this.id = 2;
 	}
 	

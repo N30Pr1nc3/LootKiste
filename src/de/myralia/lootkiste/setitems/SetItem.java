@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import de.myralia.lootkiste.setitems.items.BlutDuerster;
+import de.myralia.lootkiste.setitems.items.FeuerHelm;
 import sun.reflect.Reflection;
 
 public abstract class SetItem {
@@ -30,8 +31,15 @@ public abstract class SetItem {
 			return null;
 		}
 		List<String> lore = meta.getLore();
+
+		for (int j = 0; j < lore.size(); j++) {
+		    System.out.println(lore.get(j));
+		}
 		
-		return LootKisteItemMeta.parse(lore.get(lore.size()));
+		if(lore.size()==0){
+			return null;
+		}	
+		return LootKisteItemMeta.decode(lore.get(lore.size()-1));
 	}
 	
  	public static void initiate(){
@@ -41,8 +49,9 @@ public abstract class SetItem {
 		else{
 			SetItem.items.clear();	
 		}	
- 		
- 		SetItem.addItem(new BlutDuerster());			
+
+ 		SetItem.addItem(new BlutDuerster());
+ 		SetItem.addItem(new FeuerHelm());			
 	}
  	
  	private static void addItem(SetItem item){
@@ -73,7 +82,7 @@ public abstract class SetItem {
 	public abstract ItemStack createInstance();	
 
 	protected void createMeta(ItemStack i) {
-		ItemMeta meta =i.getItemMeta(); 
+		ItemMeta meta = i.getItemMeta(); 
 		meta.setDisplayName(this.bez);
 		List<String> lore = meta.getLore();		
 		if(lore == null){
@@ -81,7 +90,7 @@ public abstract class SetItem {
 		}
 			
 		lore.add("Setitem");
-		lore.add(HiddenStringUtils.encodeString(new LootKisteItemMeta().toString()));		
+		lore.add(new LootKisteItemMeta().encode());		
 		
 		meta.setLore(lore);
 		i.setItemMeta(meta);
@@ -92,6 +101,8 @@ public abstract class SetItem {
 		String ret = String.valueOf(this.id);
 		ret = ret.concat(" ");
 		ret = ret.concat(this.bez);
+		
+		
 		if(this.set!=null){
 			ret = ret.concat(" ");
 			ret = ret.concat(this.set.toString());	

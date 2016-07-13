@@ -1,11 +1,11 @@
 name: LootKiste
 version: 0.1
 author: NeoPrince
-website: http://midgard-journey.com
-main: com.midgardjourney.LootKiste.LootKiste
+website: http://myralia.de
+main: de.myralia.lootkiste.LootKiste
 commands:
    item:
-      description: zeigt die akte eines users an
-      usage: /akte [user]
+      description: kommandos im zusammenhang mit sonderitems
+      usage: /item
       permission: akte.akte
       permission-message: keine Berechtigung

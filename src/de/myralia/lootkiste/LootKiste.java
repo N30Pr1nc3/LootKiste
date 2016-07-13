@@ -1,8 +1,8 @@
-package com.midgardjourney.LootKiste;
-
+package de.myralia.lootkiste;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ListIterator;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,39 +32,50 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mysql.jdbc.MySQLConnection;
 
-import de.myralia.setitems.ItemSet;
-import de.myralia.setitems.SetItem;
+import de.myralia.lootkiste.setitems.ItemSet;
+import de.myralia.lootkiste.setitems.LootKisteItemMeta;
+import de.myralia.lootkiste.setitems.SetItem;
 
 public class LootKiste extends JavaPlugin implements Listener{
-	String bossprefix = "[BOSS]";
 	
 	public void onEnable(){ 
 		getServer().getPluginManager().registerEvents(this, this);
+		System.out.println("Lade Items");
 		this.loadItems();
 		System.out.println("Lade Lootkisten");
+		
 	}
 	 
 	public void onDisable(){ 
 		System.out.println("Beende Lootkisten");
 	}
 	
-	private void loadItems(CommandSender sender){
-		sender.sendMessage("lade Daten aus Datenbank");
-		this.loadItems();
-		sender.sendMessage("Reload abgeschlossen");
-	}
-	
-	private void loadItems(){
-		System.out.println("Lade Setitems");
-		ItemSet.instanciate();
-		de.myralia.setitems.MySQLConnection.getSet();
-		de.myralia.setitems.MySQLConnection.getItem();
-		System.out.println("Setitems geladen");
-	}
-	
 	@EventHandler
 	public void onInteractEvent(PlayerInteractEvent event) {
     } 
+
+	
+	private void calcUser(Player _player)
+	{
+		HashMap<ItemStack,LootKisteItemMeta> items = new HashMap<ItemStack,LootKisteItemMeta>();
+
+		
+		
+		
+//		ListIterator<ItemStack> it = _player.getInventory().iterator();	       
+//        while(it.hasNext())
+//        {
+//            ItemStack is = it.next();
+//            LootKisteItemMeta meta = SetItem.getMeta(is);            
+//            if(meta == null){
+//            	continue;
+//            }
+//            items.put(is,meta);
+//        }
+        
+        
+		
+	}
 	
 	@EventHandler
 	public void onEnitiyDeathEvent(EntityDeathEvent  event) {
@@ -82,10 +94,17 @@ public class LootKiste extends JavaPlugin implements Listener{
 		if(cmd.getName().equalsIgnoreCase("item")){
 			if(args.length==0){
 				sender.sendMessage("item [command]");
-				sender.sendMessage("item list: Listet alle möglichen items auf");
-				
+				sender.sendMessage("item list: Listet alle möglichen items auf");				
 			}
 			if(args.length==1){
+				if(args[0].equals("info")){					
+					if(sender instanceof Player ){
+//						LootKisteItemMeta meta = SetItem.getMeta(((Player) sender).getInventory().getItemInHand());
+//						sender.sendMessage(meta.toString());
+						sender.sendMessage(SetItem.getMeta(((Player) sender).getInventory().getItemInHand()).toString());
+					}
+					return true;
+				}				
 				if(args[0].equals("list")){
 					sender.sendMessage("Mögliche items");
 					for (SetItem item : SetItem.items.values()) {
@@ -125,6 +144,11 @@ public class LootKiste extends JavaPlugin implements Listener{
 			}
 		}
 		return false;
+	}
+
+	private void loadItems() {
+		System.out.println("Lade Items");
+		SetItem.initiate();		
 	}
 		
 }

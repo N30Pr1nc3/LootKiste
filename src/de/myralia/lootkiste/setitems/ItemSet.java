@@ -1,4 +1,4 @@
-package de.myralia.setitems;
+package de.myralia.lootkiste.setitems;
 
 import java.awt.Color;
 import java.util.ArrayList;
